@@ -29,21 +29,30 @@ if [[ -z "${ROM_PATH}" ]]; then
   fi
 fi
 WAVES_PATH="${MOONSOUND_WAVES_PATH:-${LIB_DIR}/waves.dat}"
+BUNDLE_ROM="${BUNDLE_MOONSOUND_ROM:-0}"
 
 if [[ ! -d "${LIB_DIR}" ]]; then
   echo "libmoonsound directory not found: ${LIB_DIR}" >&2
   echo "Set LIBMOONSOUND_DIR or add submodule at modules/libmoonsound." >&2
   exit 1
 fi
-if [[ ! -f "${ROM_PATH}" ]]; then
-  echo "YRW801 ROM not found: ${ROM_PATH}" >&2
-  echo "Set MOONSOUND_ROM_PATH to a valid yrw801.rom path." >&2
-  exit 1
-fi
 if [[ ! -f "${WAVES_PATH}" ]]; then
   echo "waves.dat not found: ${WAVES_PATH}" >&2
   echo "Set MOONSOUND_WAVES_PATH to a valid waves.dat path." >&2
   exit 1
+fi
+if [[ "${BUNDLE_ROM}" == "1" ]]; then
+  if [[ ! -f "${ROM_PATH}" ]]; then
+    echo "YRW801 ROM not found: ${ROM_PATH}" >&2
+    echo "Set MOONSOUND_ROM_PATH to a valid yrw801.rom path or unset BUNDLE_MOONSOUND_ROM." >&2
+    exit 1
+  fi
+else
+  if [[ ! -f "${ROM_PATH}" ]]; then
+    echo "YRW801 ROM not found: ${ROM_PATH}" >&2
+  fi
+  echo "Bundled ROM disabled (BUNDLE_MOONSOUND_ROM=${BUNDLE_ROM}). Browser will ask user to drop yrw801.rom." >&2
+  ROM_PATH=""
 fi
 
 mkdir -p "${OUT_DIR}" "${ASSETS_DIR}"
@@ -55,6 +64,7 @@ emcc -O3 \
   "${ROOT_DIR}/web/player/dmv_player_bridge.c" \
   "${BUILD_DIR}/libmoonsound.a" \
   -I"${LIB_DIR}/src" \
+  -lidbfs.js \
   -sMODULARIZE=1 \
   -sEXPORT_ES6=1 \
   -sALLOW_MEMORY_GROWTH=1 \
@@ -64,7 +74,10 @@ emcc -O3 \
   -sEXPORTED_RUNTIME_METHODS="['ccall','cwrap','FS','HEAP8','HEAP16','HEAPU8']" \
   -o "${OUT_DIR}/moonsound.js"
 
-cp -f "${ROM_PATH}" "${ASSETS_DIR}/yrw801.rom"
+rm -f "${ASSETS_DIR}/yrw801.rom"
+if [[ -n "${ROM_PATH}" ]]; then
+  cp -f "${ROM_PATH}" "${ASSETS_DIR}/yrw801.rom"
+fi
 cp -f "${WAVES_PATH}" "${ASSETS_DIR}/waves.dat"
 
 echo "Built web player in ${OUT_DIR}"

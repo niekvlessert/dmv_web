@@ -52,9 +52,23 @@ jobs:
       - name: Prepare Pages artifact
         run: |
           mkdir -p site
-          cp -R web/. site/
+          cp -R web site/web
           cp -R DMV1 DMV2 DMV3 DMVFT site/
           cp DMVMENU.BIN site/
+          cat > site/index.html <<'EOF'
+          <!doctype html>
+          <html lang="en">
+            <head>
+              <meta charset="utf-8" />
+              <meta http-equiv="refresh" content="0; url=./web/" />
+              <meta name="viewport" content="width=device-width, initial-scale=1" />
+              <title>Redirecting...</title>
+            </head>
+            <body>
+              <p>Redirecting to <a href="./web/">web player</a>...</p>
+            </body>
+          </html>
+          EOF
           touch site/.nojekyll
 
       - name: Upload Pages artifact

@@ -1,9 +1,22 @@
 import createMoonsoundModule from './player/moonsound.js';
 
+const query = new URLSearchParams(window.location.search);
+const RUNTIME_FLAGS = {
+  romTest: query.has('rom-test'),
+  clearRomCache: query.has('clear-rom-cache'),
+  disableBundledRom: query.has('disable-bundled-rom')
+};
+
+if (RUNTIME_FLAGS.romTest) {
+  RUNTIME_FLAGS.clearRomCache = true;
+  RUNTIME_FLAGS.disableBundledRom = true;
+}
+
 const state = {
   catalog: null,
   currentDiskIndex: 0,
-  selectedTrackKey: ''
+  selectedTrackKey: '',
+  romOverlayVisible: false
 };
 
 const els = {
@@ -16,7 +29,8 @@ const els = {
   status: document.querySelector('#status'),
   playBtn: document.querySelector('#play-btn'),
   stopBtn: document.querySelector('#stop-btn'),
-  loopCount: document.querySelector('#loop-count')
+  loopCount: document.querySelector('#loop-count'),
+  romOverlay: document.querySelector('#rom-overlay')
 };
 
 const DISK_THEME = {
@@ -66,6 +80,15 @@ function trackKey(track) {
   return `${track.diskFolder}:${track.mwm}:${track.mwk}`;
 }
 
+function syncFs(module, populate) {
+  return new Promise((resolve, reject) => {
+    module.FS.syncfs(populate, (error) => {
+      if (error) reject(error);
+      else resolve();
+    });
+  });
+}
+
 class MoonSoundPlayer {
   constructor() {
     this.module = null;
@@ -74,6 +97,9 @@ class MoonSoundPlayer {
     this.bufferPtr = 0;
     this.framesPerChunk = 2048;
     this.coreReady = false;
+    this.moduleReady = false;
+    this.idbfsMounted = false;
+    this.idbfsEnabled = false;
     this.isPlaying = false;
     this.pumpTimer = null;
 
@@ -81,7 +107,9 @@ class MoonSoundPlayer {
     this.onEnded = null;
   }
 
-  async init() {
+  async initModule() {
+    if (this.moduleReady) return;
+
     this.module = await createMoonsoundModule({
       locateFile: (file) => `./player/${file}`
     });
@@ -95,12 +123,76 @@ class MoonSoundPlayer {
     this.fn.sampleRate = this.module.cwrap('dmv_sample_rate', 'number', []);
 
     this.bufferPtr = this.module._malloc(this.framesPerChunk * 2 * 2);
+    this.moduleReady = true;
+    await this.mountPersistentFs();
+  }
 
+  async mountPersistentFs() {
+    if (!this.module || this.idbfsMounted) return;
+    this.module.FS.mkdirTree('/persist');
+    const idbfs = this.module.FS?.filesystems?.IDBFS;
+    if (!idbfs) {
+      this.idbfsMounted = true;
+      this.idbfsEnabled = false;
+      return;
+    }
+    this.module.FS.mount(idbfs, {}, '/persist');
+    await syncFs(this.module, true);
+    this.idbfsMounted = true;
+    this.idbfsEnabled = true;
+  }
+
+  hasPersistedRom() {
+    if (!this.moduleReady) return false;
+    return this.module.FS.analyzePath('/persist/yrw801.rom').exists;
+  }
+
+  async clearPersistedRom() {
+    if (!this.moduleReady) return;
+    if (!this.hasPersistedRom()) return;
+    this.module.FS.unlink('/persist/yrw801.rom');
+    if (this.idbfsEnabled) {
+      await syncFs(this.module, false);
+    }
+  }
+
+  async storeRom(romBytes) {
+    if (!this.moduleReady) throw new Error('Module is not ready.');
+    this.module.FS.writeFile('/persist/yrw801.rom', romBytes);
+    if (this.idbfsEnabled) {
+      await syncFs(this.module, false);
+    }
+  }
+
+  async ensureCoreReady() {
+    if (this.coreReady) return;
+    await this.initModule();
+    if (RUNTIME_FLAGS.clearRomCache) {
+      await this.clearPersistedRom();
+      RUNTIME_FLAGS.clearRomCache = false;
+    }
     await this.loadCoreAssets();
   }
 
   async loadCoreAssets() {
-    const rom = await fetchAsU8('./assets/yrw801.rom');
+    let rom;
+    if (this.hasPersistedRom()) {
+      rom = this.module.FS.readFile('/persist/yrw801.rom');
+    } else {
+      if (RUNTIME_FLAGS.disableBundledRom) {
+        const romError = new Error('Missing yrw801.rom.');
+        romError.code = 'ROM_REQUIRED';
+        throw romError;
+      }
+      try {
+        rom = await fetchAsU8('./assets/yrw801.rom');
+      } catch {
+        const romError = new Error('Missing yrw801.rom.');
+        romError.code = 'ROM_REQUIRED';
+        throw romError;
+      }
+    }
+
     const waves = await fetchAsU8('./assets/waves.dat');
 
     this.module.FS.mkdirTree('/core');
@@ -282,6 +374,18 @@ function setPlayingState(isPlaying) {
   els.statePill.textContent = isPlaying ? 'Playing' : 'Idle';
 }
 
+function setControlsEnabled(enabled) {
+  els.playBtn.disabled = !enabled;
+  els.stopBtn.disabled = !enabled;
+  els.loopCount.disabled = !enabled;
+}
+
+function setRomOverlay(visible) {
+  state.romOverlayVisible = visible;
+  if (!els.romOverlay) return;
+  els.romOverlay.classList.toggle('hidden', !visible);
+}
+
 function activeDisk() {
   return state.catalog.disks[state.currentDiskIndex];
 }
@@ -443,7 +547,44 @@ async function fetchAsU8(url) {
   return new Uint8Array(await response.arrayBuffer());
 }
 
+async function tryInitializeCore() {
+  try {
+    await player.ensureCoreReady();
+    setRomOverlay(false);
+    setControlsEnabled(true);
+    setStatus('Ready. Double-click a title to play.');
+    return true;
+  } catch (error) {
+    if (error?.code === 'ROM_REQUIRED') {
+      setControlsEnabled(false);
+      setRomOverlay(true);
+      setStatus('Drop yrw801.rom to continue.');
+      return false;
+    }
+    throw error;
+  }
+}
+
+function findDroppedRomFile(dataTransfer) {
+  const files = [...(dataTransfer?.files || [])];
+  return files.find((file) => file.name.toLowerCase() === 'yrw801.rom') || null;
+}
+
+async function handleRomDrop(file) {
+  setStatus('Importing yrw801.rom...');
+  const romBytes = new Uint8Array(await file.arrayBuffer());
+  await player.storeRom(romBytes);
+  setStatus('ROM imported. Initializing playback core...');
+  await tryInitializeCore();
+}
+
 async function handlePlay() {
+  if (!player.coreReady) {
+    setStatus('Drop yrw801.rom to enable playback.');
+    setRomOverlay(true);
+    return;
+  }
+
   const track = activeTrack();
   if (!track) return;
   if (!track.available) {
@@ -484,18 +625,38 @@ async function boot() {
     setSelectedTrack(displayTracksForDisk(activeDisk())[0] || null);
     applyDiskTheme(activeDisk().id);
 
-    setStatus('Initializing libmoonsound WASM...');
-    await player.init();
-
     renderDiskMenu();
     renderTracks();
     updateNowPlayingMeta();
 
+    setControlsEnabled(false);
     setPlayingState(false);
-    setStatus('Ready. Double-click a title to play.');
+
+    setStatus('Initializing libmoonsound WASM...');
+    await player.initModule();
+    await tryInitializeCore();
   } catch (error) {
     setStatus(`Initialization failed: ${error.message}`);
   }
+}
+
+if (els.romOverlay) {
+  els.romOverlay.addEventListener('dragover', (event) => {
+    event.preventDefault();
+  });
+  els.romOverlay.addEventListener('drop', async (event) => {
+    event.preventDefault();
+    const romFile = findDroppedRomFile(event.dataTransfer);
+    if (!romFile) {
+      setStatus('Please drop a file named yrw801.rom.');
+      return;
+    }
+    try {
+      await handleRomDrop(romFile);
+    } catch (error) {
+      setStatus(`ROM import failed: ${error.message}`);
+    }
+  });
 }
 
 els.playBtn.addEventListener('click', handlePlay);

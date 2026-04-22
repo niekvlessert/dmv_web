@@ -28,6 +28,7 @@ body {
 }
 
 .screen-shell {
+  position: relative;
   width: min(1280px, 100%);
   margin: 0 auto;
   min-height: 100vh;
@@ -36,6 +37,45 @@ body {
   display: grid;
   grid-template-rows: auto 1fr auto;
   gap: 12px;
+}
+
+.rom-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: rgba(0, 0, 0, 0.84);
+  border: 2px solid #2f7fcb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 18px;
+}
+
+.rom-overlay.hidden {
+  display: none;
+}
+
+.rom-overlay-box {
+  border: 4px solid #76c9ff;
+  box-shadow: inset 0 0 0 2px #2f7fcb;
+  border-radius: 14px;
+  background: #031125;
+  padding: 20px 24px;
+  max-width: 560px;
+}
+
+.rom-overlay-title {
+  margin: 0;
+  color: #dff3ff;
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  line-height: 1.1;
+}
+
+.rom-overlay-sub {
+  margin: 8px 0 0;
+  color: #9fc8eb;
+  font-size: 0.92rem;
 }
 
 .logo-zone {
