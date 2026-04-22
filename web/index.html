@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dutch MoonSound Veterans</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="screen-shell">
+      <header class="logo-zone">
+        <div class="sunset"></div>
+        <div class="moon-logo-frame">
+          <h1 class="moon-logo">MOONSOUND</h1>
+        </div>
+        <div class="sub-logo">Dutch Moonsound Veterans <span id="disk-title">Disk 1</span></div>
+      </header>
+
+      <section class="menu-zone">
+        <div id="disk-menu" class="disk-menu" role="tablist" aria-label="Disk menu"></div>
+        <div id="track-list" class="track-list" role="listbox" aria-label="Track list"></div>
+      </section>
+
+      <footer class="now-zone">
+        <div class="now-playing-box">
+          <span id="now-meta">Now playing none</span>
+        </div>
+        <div class="controls">
+          <button id="play-btn" class="ctrl" type="button">Play</button>
+          <button id="stop-btn" class="ctrl" type="button">Stop</button>
+          <label class="loop-wrap" for="loop-count">Loops
+            <input id="loop-count" type="number" min="0" max="99" value="0" />
+          </label>
+          <span id="state-pill" class="state-pill">Idle</span>
+          <span id="disk-count" class="count-pill"></span>
+        </div>
+        <p id="status" class="status">Initializing...</p>
+      </footer>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,3 @@
+[submodule "modules/libmoonsound"]
+	path = modules/libmoonsound
+	url = https://github.com/niekvlessert/libmoonsound.git

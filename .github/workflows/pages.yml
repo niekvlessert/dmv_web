@@ -1,0 +1,74 @@
+name: Build and Deploy Pages
+
+on:
+  push:
+    branches: ["main", "master"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Setup Emscripten
+        uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: latest
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Validate libmoonsound presence
+        run: |
+          if [ ! -d "modules/libmoonsound" ]; then
+            echo "Missing ./modules/libmoonsound. Add it as a submodule in this repo for CI builds."
+            exit 1
+          fi
+
+      - name: Generate catalog
+        run: node scripts/extract_catalog.mjs
+
+      - name: Build WASM player
+        run: LIBMOONSOUND_DIR=modules/libmoonsound ./scripts/build_web_player.sh
+
+      - name: Prepare Pages artifact
+        run: |
+          mkdir -p site
+          cp -R web site/web
+          cp -R DMV1 DMV2 DMV3 DMVFT site/
+          cp DMVMENU.BIN site/
+          touch site/.nojekyll
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

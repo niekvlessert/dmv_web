@@ -1,0 +1,240 @@
+:root {
+  --bg: #000000;
+  --ink: #c9ecff;
+  --select-bg: #c71906;
+  --select-fg: #ff7e64;
+  --blue-1: #76c9ff;
+  --blue-2: #2f7fcb;
+  --blue-3: #a6e2ff;
+  --sun-a: #ffe761;
+  --sun-b: #ffb300;
+  --sun-c: #ff5f00;
+  --sky-a: #320000;
+  --sky-b: #8b1c00;
+  --sky-c: #0f0000;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: #000;
+  color: var(--ink);
+  font-family: "Courier New", Courier, monospace;
+}
+
+.screen-shell {
+  width: min(1280px, 100%);
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 10px 14px 16px;
+  background: #000;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 12px;
+}
+
+.logo-zone {
+  position: relative;
+  border-bottom: 2px solid #072447;
+  padding-bottom: 10px;
+}
+
+.sunset {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 95% 24%, var(--sun-a) 0, var(--sun-b) 10%, var(--sun-c) 24%, transparent 36%),
+    linear-gradient(180deg, var(--sky-a), var(--sky-b) 35%, var(--sky-c) 65%, #000000 100%);
+  opacity: 0.95;
+}
+
+.moon-logo-frame,
+.sub-logo {
+  position: relative;
+  z-index: 1;
+}
+
+.moon-logo-frame {
+  width: min(980px, 95%);
+  margin: 8px auto 0;
+  border: 6px solid var(--blue-2);
+  border-radius: 30px;
+  box-shadow: inset 0 0 0 5px var(--blue-1), 0 0 0 3px #0d2b58;
+  background: rgba(4, 12, 22, 0.88);
+  text-align: center;
+  padding: 10px 14px;
+}
+
+.moon-logo {
+  margin: 0;
+  font-size: clamp(2rem, 8vw, 6rem);
+  line-height: 0.92;
+  letter-spacing: 0.06em;
+  color: #eff9ff;
+  text-shadow:
+    0 0 0 #fff,
+    0 0 8px #89d0ff,
+    0 0 16px #4ea6f4,
+    2px 2px 0 #1f5ea6,
+    -2px 2px 0 #1f5ea6,
+    2px -2px 0 #1f5ea6,
+    -2px -2px 0 #1f5ea6;
+}
+
+.sub-logo {
+  width: fit-content;
+  margin: 8px auto 0;
+  border: 4px solid #2b84d5;
+  border-top: none;
+  background: rgba(179, 214, 255, 0.9);
+  color: #edf8ff;
+  font-size: clamp(1rem, 2vw, 1.18rem);
+  padding: 5px 16px 8px;
+  text-shadow: 0 1px 0 #1c5ca6;
+}
+
+.menu-zone {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 10px;
+}
+
+.disk-menu {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.disk-btn {
+  border: 1px solid #4da4ec;
+  background: #051328;
+  color: #cdeaff;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.86rem;
+  padding: 4px 9px;
+  cursor: pointer;
+}
+
+.disk-btn.active {
+  background: #15416f;
+  color: #ffffff;
+}
+
+.track-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px 28px;
+  align-content: start;
+  max-height: 100%;
+  overflow: auto;
+  padding-right: 8px;
+}
+
+.track {
+  border: none;
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+  font-family: "Lucida Console", "Consolas", "Courier New", monospace;
+  font-size: clamp(0.86rem, 1.75vw, 2.75rem);
+  line-height: 1.03;
+  white-space: nowrap;
+  overflow: visible;
+  padding: 0 6px;
+  cursor: pointer;
+}
+
+.track.active {
+  background: var(--select-bg);
+  color: var(--select-fg);
+}
+
+.track.unavailable {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.now-zone {
+  display: grid;
+  gap: 8px;
+}
+
+.now-playing-box {
+  border: 5px solid var(--blue-2);
+  box-shadow: inset 0 0 0 4px var(--blue-3), 0 0 0 1px #123e74;
+  border-radius: 26px;
+  color: #d8f1ff;
+  text-align: center;
+  font-size: clamp(1rem, 2.2vw, 3rem);
+  line-height: 1.12;
+  padding: 10px 12px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ctrl {
+  border: 1px solid #3f91d9;
+  background: #08203d;
+  color: #dff2ff;
+  font-family: "Courier New", Courier, monospace;
+  padding: 4px 9px;
+  cursor: pointer;
+}
+
+.loop-wrap {
+  color: #abd8ff;
+  font-size: 0.84rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.loop-wrap input {
+  width: 52px;
+  border: 1px solid #3d8dd6;
+  background: #061122;
+  color: #e6f5ff;
+  padding: 2px 4px;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.state-pill,
+.count-pill {
+  border: 1px solid #2e76b9;
+  background: #07152b;
+  color: #bfe0ff;
+  padding: 3px 8px;
+  font-size: 0.79rem;
+}
+
+.status {
+  margin: 0;
+  color: #ffe585;
+  font-size: 0.8rem;
+  min-height: 1.1rem;
+}
+
+@media (max-width: 980px) {
+  .track-list {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .track {
+    font-size: clamp(0.96rem, 4vw, 2.2rem);
+  }
+
+  .moon-logo {
+    letter-spacing: 0.03em;
+  }
+}

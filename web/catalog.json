@@ -1,0 +1,1122 @@
+{
+  "source": "DISKEXEC.BAS strings extraction",
+  "generatedAt": "2026-04-22T12:45:29.905Z",
+  "disks": [
+    {
+      "id": "DMV1",
+      "label": "Disk 1",
+      "folder": "DMV1",
+      "tracks": [
+        {
+          "title": "Angel Area I",
+          "author": "John Hassink",
+          "mwm": "ANGEL_01.MWM",
+          "mwk": "ANGELKIT.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Rearviewmirror",
+          "author": "Meits",
+          "mwm": "REARVIEW.MWM",
+          "mwk": "OPL4MUS.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Shadelands Title and Intro",
+          "author": "John Hassink",
+          "mwm": "SLINTRO.MWM",
+          "mwk": "METALCAB.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Usas Scenarieau",
+          "author": "Meits",
+          "mwm": "USAS.MWM",
+          "mwk": "OPL4MUS.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Ys II Battle Theme",
+          "author": "Bart Roijmans",
+          "mwm": "YS2BATTL.MWM",
+          "mwk": "OPL4MUS.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "The Tower of Deluzas",
+          "author": "John Hassink",
+          "mwm": "TOWERDEL.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Lost",
+          "author": "Meits",
+          "mwm": "LOST.MWM",
+          "mwk": "OPL4MUS.MWK",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Deventer Skyline",
+          "author": "Robert Vroemisse",
+          "mwm": "SKYLINE.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Walkin on the Edge",
+          "author": "Meits",
+          "mwm": "WALKEDGE.MWM",
+          "mwk": "OPL4MUS.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "The Lava Area",
+          "author": "Bart Roijmans",
+          "mwm": "YS4LAVA.MWM",
+          "mwk": "OPL4MUS.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Heart of Fire",
+          "author": "Meits",
+          "mwm": "HERTFIRE.MWM",
+          "mwk": "OPL4MUS.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Keep the Dreams alive",
+          "author": "Meits",
+          "mwm": "DREAMS.MWM",
+          "mwk": "OPL4MUS.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Difficult Move",
+          "author": "Meits",
+          "mwm": "DIFFMOVE.MWM",
+          "mwk": "OPL4MUS.MWK",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Flying XIII",
+          "author": "Hans Cnossen",
+          "mwm": "FLYING13.MWM",
+          "mwk": "FLYING13.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Shadelands The Deadwoods",
+          "author": "John Hassink",
+          "mwm": "SLSTAGE1.MWM",
+          "mwk": "METALCAB.MWK",
+          "group": 2,
+          "available": true
+        },
+        {
+          "title": "The Smoke",
+          "author": "Meits",
+          "mwm": "THESMOKE.MWM",
+          "mwk": "OPL4MUS.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Resistance",
+          "author": "Meits",
+          "mwm": "RESIST.MWM",
+          "mwk": "OPL4MUS.MWK",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Prepare for Take off",
+          "author": "Hans Cnossen",
+          "mwm": "FLYING09.MWM",
+          "mwk": "FLYING13.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Angel Area IX",
+          "author": "John Hassink",
+          "mwm": "ANGEL_09.MWM",
+          "mwk": "*",
+          "group": 2,
+          "available": true
+        },
+        {
+          "title": "Sunday",
+          "author": "Meits",
+          "mwm": "SUNDAY.MWM",
+          "mwk": "OPL4MUS.MWK",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Happy Ending",
+          "author": "Robert Vroemisse",
+          "mwm": "ENDING.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Bustling Town",
+          "author": "John Hassink",
+          "mwm": "ILLUCITY.MWM",
+          "mwk": "ANGELKIT.MWK",
+          "group": 2,
+          "available": true
+        },
+        {
+          "title": "The Final Treshold",
+          "author": "John Hassink",
+          "mwm": "ALMOSEND.MWM",
+          "mwk": "*",
+          "group": 2,
+          "available": true
+        },
+        {
+          "title": "Cry little Sister",
+          "author": "Bart Roijmans",
+          "mwm": "CRYSISTE.MWM",
+          "mwk": "OPL4MUS.MWK",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Climax",
+          "author": "Master of Audio",
+          "mwm": "CLIMAX.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Attack of the Wolves",
+          "author": "John Hassink",
+          "mwm": "WOLVES.MWM",
+          "mwk": "*",
+          "group": 2,
+          "available": true
+        },
+        {
+          "title": "Illusion City Prologue",
+          "author": "Ruud van de Moosdijk",
+          "mwm": "PROLOG4.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Melancholic and Heroic Rhapsody",
+          "author": "John Hassink",
+          "mwm": "MELAHERO.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Wolves in the Snow",
+          "author": "John Hassink",
+          "mwm": "WITS.MWM",
+          "mwk": "*",
+          "group": 2,
+          "available": true
+        },
+        {
+          "title": "Start a Level",
+          "author": "Hans Cnossen",
+          "mwm": "FLYING03.MWM",
+          "mwk": "FLYING13.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Angel Area VI",
+          "author": "John Hassink",
+          "mwm": "ANGEL_06.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "The Saga continues",
+          "author": "Hans Cnossen",
+          "mwm": "FLYING02.MWM",
+          "mwk": "FLYING13.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Wicked Child",
+          "author": "Meits",
+          "mwm": "WICKCHLD.MWM",
+          "mwk": "OPL4MUS.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Flying I",
+          "author": "Hans Cnossen",
+          "mwm": "FLYING01.MWM",
+          "mwk": "FLYING13.MWK",
+          "group": 1,
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": "DMV2",
+      "label": "Disk 2",
+      "folder": "DMV2",
+      "tracks": [
+        {
+          "title": "This one was in Tetrys",
+          "author": "Master of Audio",
+          "mwm": "TETRYS1.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "On our Way to Fantasy World",
+          "author": "Master of Audio",
+          "mwm": "FANTASY.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Groucho",
+          "author": "Master of Audio",
+          "mwm": "GROUCHO.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Moments in Magic",
+          "author": "Robert Vroemisse",
+          "mwm": "MIM.MWM",
+          "mwk": "ROOPWAVE.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Rock n Roll Cinderella",
+          "author": "Jorito",
+          "mwm": "ROCKNROL.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "The stolen Scepter",
+          "author": "John Hassink",
+          "mwm": "SORCERIA.MWM",
+          "mwk": "*",
+          "group": 2,
+          "available": true
+        },
+        {
+          "title": "Crazy",
+          "author": "Hans Cnossen",
+          "mwm": "CRAZY.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Search for a Cloud",
+          "author": "Bart Roijmans",
+          "mwm": "PARADISE.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "My neef is a Slave to the Rave",
+          "author": "Robert Vroemisse",
+          "mwm": "RAVENEEF.MWM",
+          "mwk": "ROOPWAVE.MWK",
+          "group": 2,
+          "available": true
+        },
+        {
+          "title": "Latin Beach Party",
+          "author": "Robert Vroemisse",
+          "mwm": "LATINBP.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Are you twisted",
+          "author": "Robert Vroemisse",
+          "mwm": "TWISTED2.MWM",
+          "mwk": "ROOPWAVE.MWK",
+          "group": 2,
+          "available": true
+        },
+        {
+          "title": "Theme of Karen",
+          "author": "John Hassink",
+          "mwm": "KAREN.MWM",
+          "mwk": "*",
+          "group": 2,
+          "available": true
+        },
+        {
+          "title": "All there is to see Part II",
+          "author": "Bart Roijmans",
+          "mwm": "ALLPART2.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "The Curse is over",
+          "author": "Robert Vroemisse",
+          "mwm": "THEEND.MWM",
+          "mwk": "ROOPWAVE.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "IFSL",
+          "author": "Hans Cnossen",
+          "mwm": "IFSL_NEW.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Weapon Shop",
+          "author": "John Hassink",
+          "mwm": "WAPENWIN.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "The Magicians Blessing",
+          "author": "Robert Vroemisse",
+          "mwm": "BLESSING.MWM",
+          "mwk": "ROOPWAVE.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Farewell to a Friend",
+          "author": "Robert Vroemisse",
+          "mwm": "FAREWELL.MWM",
+          "mwk": "ROOPWAVE.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Grace",
+          "author": "Master of Audio",
+          "mwm": "GRACE.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Xilion Valley revisited",
+          "author": "Robert Vroemisse",
+          "mwm": "XILION.MWM",
+          "mwk": "ROOPWAVE.MWK",
+          "group": 2,
+          "available": true
+        },
+        {
+          "title": "Sonyc Palm Beach",
+          "author": "Jorito",
+          "mwm": "PALM.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Careless for Strings",
+          "author": "Master of Audio",
+          "mwm": "CARELESS.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Proba Me Deus",
+          "author": "John Hassink",
+          "mwm": "PROBA.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "The Del from Hell",
+          "author": "Robert Vroemisse",
+          "mwm": "HELLDEL.MWM",
+          "mwk": "ROOPWAVE.MWK",
+          "group": 2,
+          "available": true
+        },
+        {
+          "title": "At Melchiors Place",
+          "author": "John Hassink",
+          "mwm": "MELCHIOR.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Some kind of Intro",
+          "author": "Robert Vroemisse",
+          "mwm": "HOUSIE.MWM",
+          "mwk": "ROOPWAVE.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Village",
+          "author": "John Hassink",
+          "mwm": "VILLAGE.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Defender of the Beach",
+          "author": "Robert Vroemisse",
+          "mwm": "DEFBEACH.MWM",
+          "mwk": "ROOPWAVE.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "The Outcast",
+          "author": "Robert Vroemisse",
+          "mwm": "OUTCAST.MWM",
+          "mwk": "ROOPWAVE.MWK",
+          "group": 2,
+          "available": true
+        },
+        {
+          "title": "Intro of Sonyc",
+          "author": "Jorito",
+          "mwm": "INTRO.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Johnnys Orgasm",
+          "author": "Robert Vroemisse",
+          "mwm": "JOHNGASM.MWM",
+          "mwk": "ROOPWAVE.MWK",
+          "group": 3,
+          "available": true
+        },
+        {
+          "title": "The Curse of Kaijruu",
+          "author": "John Hassink",
+          "mwm": "TCOKINTS.MWM",
+          "mwk": "SJONNIE.MWK",
+          "group": 2,
+          "available": true
+        },
+        {
+          "title": "Final Battle",
+          "author": "John Hassink",
+          "mwm": "VECHTUH.MWM",
+          "mwk": "SJONNIE.MWK",
+          "group": 2,
+          "available": true
+        },
+        {
+          "title": "Bonus Sonyc",
+          "author": "Jorito",
+          "mwm": "BONUS.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": "DMV3",
+      "label": "Disk 3",
+      "folder": "DMV3",
+      "tracks": [
+        {
+          "title": "This one should be in Tetrys",
+          "author": "Master of Audio",
+          "mwm": "TETRYS.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "The Forest",
+          "author": "Jorito",
+          "mwm": "FOREST.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Ice Ridges of Noltia",
+          "author": "Master of Audio",
+          "mwm": "YS2FINAL.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Boroz Forest",
+          "author": "Meits",
+          "mwm": "BOROZ.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Good old Days",
+          "author": "Master of Audio",
+          "mwm": "GOODDAYS.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Trading Town of Redmont",
+          "author": "John Hassink",
+          "mwm": "REDMONT.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Without You",
+          "author": "Master of Audio",
+          "mwm": "WITHOUT.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Take your Time",
+          "author": "Master of Audio",
+          "mwm": "TAKETIME.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": false
+        },
+        {
+          "title": "Blast those Red Dwarfs",
+          "author": "Master of Audio",
+          "mwm": "REDDWARF.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "La la la",
+          "author": "Hans Cnossen",
+          "mwm": "LALALA.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": false
+        },
+        {
+          "title": "Xilion Valley Theme",
+          "author": "Robert Vroemisse",
+          "mwm": "XVALTHEM.MWM",
+          "mwk": "*",
+          "group": 2,
+          "available": true
+        },
+        {
+          "title": "Sonyc Battle",
+          "author": "Jorito",
+          "mwm": "BATTLE.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Long Time no See",
+          "author": "Master of Audio",
+          "mwm": "LONGTIME.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Plug and Pray",
+          "author": "Ruud van de Moosdijk",
+          "mwm": "PLUGPRAY.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Ruins of Sonyc",
+          "author": "Jorito",
+          "mwm": "RUINS.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Jump in tha funky Car",
+          "author": "Meits",
+          "mwm": "JMPINCAR.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Sonyc in Ice World",
+          "author": "Jorito",
+          "mwm": "ICE.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Puyo maar dan anders",
+          "author": "Robert Vroemisse",
+          "mwm": "PUYOFUCK.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Game Over Sonyc",
+          "author": "Jorito",
+          "mwm": "GAMEOVER.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Another Experiment",
+          "author": "DandAN",
+          "mwm": "PERESTRA.MWM",
+          "mwk": "*",
+          "group": 2,
+          "available": true
+        },
+        {
+          "title": "The One who rules the Heavens",
+          "author": "Meits",
+          "mwm": "HEAVENS.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Children",
+          "author": "Bart Roijmans",
+          "mwm": "CHILDREN.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Je suis Jean Louis",
+          "author": "Master of Audio",
+          "mwm": "JESUIS.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "One Night in Neo Kobe City",
+          "author": "Ruud van de Moosdijk",
+          "mwm": "NEOKOBE.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Xilion Range",
+          "author": "Robert Vroemisse",
+          "mwm": "XILIONRA.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Puddle Land",
+          "author": "John Hassink",
+          "mwm": "PUDDLE.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Moonlight Fantasy",
+          "author": "Master of Audio",
+          "mwm": "MOONFANT.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "I can not just wait to be King",
+          "author": "Bart Roijmans",
+          "mwm": "CANTKING.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "The Syonin",
+          "author": "Meits",
+          "mwm": "SYONIN.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Storms of Rage",
+          "author": "Master of Audio",
+          "mwm": "STRMRAGE.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Fantasy Hunter",
+          "author": "Hans Cnossen",
+          "mwm": "FANTASY1.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Water Shrine",
+          "author": "Jorito",
+          "mwm": "W_SHRINE.MWM",
+          "mwk": "*",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Yellow Sand",
+          "author": "Master of Audio",
+          "mwm": "YELWSAND.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Seven Spirits",
+          "author": "Master of Audio",
+          "mwm": "7SPIRITS.MWM",
+          "mwk": "*",
+          "group": 0,
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": "DMVFT",
+      "label": "Future Disk",
+      "folder": "DMVFT",
+      "tracks": [
+        {
+          "title": "Joritalo Spacecakewalk",
+          "author": "Jorito",
+          "mwm": "JORITALO.MWM",
+          "mwk": "JORITALO.MWK",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "The Woei Theme",
+          "author": "Jorito",
+          "mwm": "WOEI.MWM",
+          "mwk": "WOEI.MWK",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Expressions",
+          "author": "DandAN",
+          "mwm": "EXPRESSI.MWM",
+          "mwk": "EXPRESSI.MWK",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Fight for Freedom",
+          "author": "Jorito",
+          "mwm": "BOSSBGM7.MWM",
+          "mwk": "FINALKIT.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Pure House",
+          "author": "Omega",
+          "mwm": "PUREHOUS.MWM",
+          "mwk": "PUREHOUS.MWK",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Volcanic Beat",
+          "author": "Omega",
+          "mwm": "VOLCANIC.MWM",
+          "mwk": "BOMBAKIT.MWK",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Nosferatu",
+          "author": "Hans Cnossen",
+          "mwm": "NOSFERATU.MWM",
+          "mwk": "NOSFERATU.MWK",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Digital Chill III",
+          "author": "Omega",
+          "mwm": "DIGIT3.MWM",
+          "mwk": "DIGIT3.MWK",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Without Sense",
+          "author": "DandAN",
+          "mwm": "SENSE.MWM",
+          "mwk": "SENSE.MWK",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Lizard Star",
+          "author": "Omega",
+          "mwm": "LZRDSTAR.MWM",
+          "mwk": "LZRDSTAR.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Inspiration on Demand",
+          "author": "Robert Vroemisse",
+          "mwm": "IODEMAND.MWM",
+          "mwk": "IODEMAND.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Frozen Clouds",
+          "author": "Jorito",
+          "mwm": "FROZENCL.MWM",
+          "mwk": "BOMBAKIT.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Epic Goa I",
+          "author": "Omega",
+          "mwm": "EPIC.MWM",
+          "mwk": "EPIC.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Dimension Plus",
+          "author": "Omega",
+          "mwm": "DIMEPLUS.MWM",
+          "mwk": "BOMBAKIT.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Fnorkels",
+          "author": "Hans Cnossen",
+          "mwm": "FNORKELS.MWM",
+          "mwk": "FNORKELS.MWK",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Slow down",
+          "author": "DandAN",
+          "mwm": "SLOWDOWN.MWM",
+          "mwk": "SLOWDOWN.MWK",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Drifting Spirits",
+          "author": "Robert Vroemisse",
+          "mwm": "DRIFTING.MWM",
+          "mwk": "DRIFTING.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "So now you know it",
+          "author": "Meits",
+          "mwm": "KNOW_IT.MWM",
+          "mwk": "DRAB_ONE.MWK",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Llightning",
+          "author": "Omega",
+          "mwm": "LLIGHT.MWM",
+          "mwk": "LLIGHT.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Hurry up",
+          "author": "Jorito",
+          "mwm": "HURRYUP.MWM",
+          "mwk": "HURRYUP.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Voodoo People",
+          "author": "Meits",
+          "mwm": "VOODOO.MWM",
+          "mwk": "VOODOO.MWK",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Down into the Fires of Hell",
+          "author": "Jorito",
+          "mwm": "FIRESHEL.MWM",
+          "mwk": "BOMBAKIT.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Come take my Hand",
+          "author": "Meits",
+          "mwm": "COMEVOIC.MWM",
+          "mwk": "COMEVOIC.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Pnjork",
+          "author": "Hans Cnossen",
+          "mwm": "PNJORK.MWM",
+          "mwk": "PNJORK.MWK",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Where is the Power",
+          "author": "DandAN",
+          "mwm": "METEOR.MWM",
+          "mwk": "METEOR.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "BDD Theme III",
+          "author": "Jorito",
+          "mwm": "BDD3.MWM",
+          "mwk": "BDD3.MWK",
+          "group": 2,
+          "available": true
+        },
+        {
+          "title": "Gabbeeur",
+          "author": "Omega",
+          "mwm": "GABBER.MWM",
+          "mwk": "GABBER.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Hakkuh",
+          "author": "Omega",
+          "mwm": "HAKKUH.MWM",
+          "mwk": "HAKKUH.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Man with the Gun",
+          "author": "Jorito",
+          "mwm": "GUN.MWM",
+          "mwk": "GUN.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Acid Makeover",
+          "author": "Omega",
+          "mwm": "MAKEOVER.MWM",
+          "mwk": "MAKE512K.MWK",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Digital Chill",
+          "author": "Omega",
+          "mwm": "CHILL.MWM",
+          "mwk": "CHILL.MWK",
+          "group": 0,
+          "available": true
+        },
+        {
+          "title": "Copy is Crime Part II",
+          "author": "Omega",
+          "mwm": "COPY2.MWM",
+          "mwk": "COPY2.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Omega II",
+          "author": "Omega",
+          "mwm": "OMEGA02.MWM",
+          "mwk": "OMEGA02.MWK",
+          "group": 1,
+          "available": true
+        },
+        {
+          "title": "Metal Trance",
+          "author": "DandAN",
+          "mwm": "METALTRA.MWM",
+          "mwk": "METALTRA.MWK",
+          "group": 1,
+          "available": true
+        }
+      ]
+    }
+  ]
+}

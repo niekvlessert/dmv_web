@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+
+# Local build output
+build-emscripten-libmoonsound/
+
+# Generated web player binaries (rebuild with scripts/build_web_player.sh)
+web/player/moonsound.js
+web/player/moonsound.wasm
+
+# Generated/copied runtime assets
+web/assets/yrw801.rom
+web/assets/waves.dat
