@@ -52,7 +52,7 @@ jobs:
       - name: Prepare Pages artifact
         run: |
           mkdir -p site
-          cp -R web site/web
+          cp -R web/. site/
           cp -R DMV1 DMV2 DMV3 DMVFT site/
           cp DMVMENU.BIN site/
           touch site/.nojekyll

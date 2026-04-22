@@ -420,7 +420,7 @@ function buildFileCandidates(filename) {
 }
 
 async function fetchFirstExisting(folder, candidateNames) {
-  const pathPrefixes = ['../', '/', './', ''];
+  const pathPrefixes = ['', './', '../'];
   const errors = [];
 
   for (const prefix of pathPrefixes) {
