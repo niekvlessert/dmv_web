@@ -120,6 +120,13 @@ int dmv_render_pcm(int16_t *out_interleaved, int frames) {
   return (int)ms_render(g_ctx, out_interleaved, (uint32_t)frames);
 }
 
+int dmv_total_samples(void) {
+  if (!g_ctx) {
+    return 0;
+  }
+  return (int)ms_get_total_samples(g_ctx);
+}
+
 void dmv_stop_song(void) {
   (void)g_ctx;
 }

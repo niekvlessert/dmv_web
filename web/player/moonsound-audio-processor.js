@@ -5,8 +5,11 @@ class MoonSoundProcessor extends AudioWorkletProcessor {
     this.currentChunk = null;
     this.currentOffset = 0;
     this.playing = false;
+    this.ending = false;
     this.pendingRequest = false;
     this.frameCounter = 0;
+    this.queuedFrames = 0;
+    this.fadeFrames = Math.floor(sampleRate * 0.75);
 
     this.port.postMessage({ type: 'ready' });
 
@@ -14,19 +17,29 @@ class MoonSoundProcessor extends AudioWorkletProcessor {
       const msg = event.data;
       if (msg.type === 'buffer') {
         this.queue.push({ left: msg.left, right: msg.right });
+        this.queuedFrames += msg.left.length;
         this.pendingRequest = false;
       } else if (msg.type === 'start') {
         this.playing = true;
+        this.ending = false;
       } else if (msg.type === 'pause') {
         this.playing = false;
       } else if (msg.type === 'stop') {
         this.playing = false;
+        this.ending = false;
         this.queue = [];
         this.currentChunk = null;
         this.currentOffset = 0;
+        this.queuedFrames = 0;
         this.pendingRequest = false;
       } else if (msg.type === 'end') {
-        this.playing = false;
+        this.ending = true;
+        if (!this.currentChunk && this.queue.length === 0) {
+          this.playing = false;
+          this.ending = false;
+          this.queuedFrames = 0;
+          this.port.postMessage({ type: 'drained' });
+        }
       } else if (msg.type === 'ping') {
         this.port.postMessage({ type: 'pong', queueLength: this.queue.length, playing: this.playing });
       }
@@ -68,8 +81,13 @@ class MoonSoundProcessor extends AudioWorkletProcessor {
       const toCopy = Math.min(available, needed);
 
       for (let i = 0; i < toCopy; i += 1) {
-        outLeft[written + i] = srcL[this.currentOffset + i];
-        outRight[written + i] = srcR[this.currentOffset + i];
+        let gain = 1;
+        if (this.ending && this.fadeFrames > 0 && this.queuedFrames < this.fadeFrames) {
+          gain = this.queuedFrames / this.fadeFrames;
+        }
+        outLeft[written + i] = srcL[this.currentOffset + i] * gain;
+        outRight[written + i] = srcR[this.currentOffset + i] * gain;
+        if (this.queuedFrames > 0) this.queuedFrames -= 1;
       }
 
       written += toCopy;
@@ -81,7 +99,13 @@ class MoonSoundProcessor extends AudioWorkletProcessor {
       }
     }
 
-    if (this.queue.length < 6 && !this.pendingRequest) {
+    if (this.ending && this.queue.length === 0 && !this.currentChunk && this.queuedFrames === 0) {
+      this.playing = false;
+      this.ending = false;
+      this.port.postMessage({ type: 'drained' });
+    }
+
+    if (!this.ending && this.queue.length < 6 && !this.pendingRequest) {
       this.pendingRequest = true;
       this.port.postMessage({ type: 'need-data' });
     }

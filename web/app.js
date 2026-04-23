@@ -16,7 +16,11 @@ const state = {
   catalog: null,
   currentDiskIndex: 0,
   selectedTrackKey: '',
-  romOverlayVisible: false
+  romOverlayVisible: false,
+  autoAdvanceAfterEnd: false,
+  playbackTimerId: null,
+  playbackStartedAtMs: 0,
+  playbackTotalSeconds: NaN
 };
 
 const els = {
@@ -30,7 +34,8 @@ const els = {
   playBtn: document.querySelector('#play-btn'),
   stopBtn: document.querySelector('#stop-btn'),
   loopCount: document.querySelector('#loop-count'),
-  romOverlay: document.querySelector('#rom-overlay')
+  romOverlay: document.querySelector('#rom-overlay'),
+  playbackTime: document.querySelector('#playback-time')
 };
 
 const DISK_THEME = {
@@ -94,6 +99,7 @@ class MoonSoundPlayer {
     this.module = null;
     this.ctx = null;
     this.workletNode = null;
+    this.gainNode = null;
     this.bufferPtr = 0;
     this.framesPerChunk = 2048;
     this.coreReady = false;
@@ -105,6 +111,7 @@ class MoonSoundPlayer {
 
     this.fn = {};
     this.onEnded = null;
+    this.lastTotalSamples = 0;
   }
 
   async initModule() {
@@ -121,6 +128,7 @@ class MoonSoundPlayer {
     this.fn.shutdown = this.module.cwrap('dmv_shutdown', null, []);
     this.fn.lastError = this.module.cwrap('dmv_last_error', 'string', []);
     this.fn.sampleRate = this.module.cwrap('dmv_sample_rate', 'number', []);
+    this.fn.totalSamples = this.module.cwrap('dmv_total_samples', 'number', []);
 
     this.bufferPtr = this.module._malloc(this.framesPerChunk * 2 * 2);
     this.moduleReady = true;
@@ -225,18 +233,23 @@ class MoonSoundPlayer {
     if (!this.workletNode) {
       setStatus('Loading AudioWorklet module...');
       await this.ctx.audioWorklet.addModule('./player/moonsound-audio-processor.js');
+      this.gainNode = this.ctx.createGain();
+      this.gainNode.gain.value = 1;
+      this.gainNode.connect(this.ctx.destination);
       this.workletNode = new AudioWorkletNode(this.ctx, 'moonsound-processor', {
         numberOfInputs: 0,
         numberOfOutputs: 1,
         outputChannelCount: [2]
       });
-      this.workletNode.connect(this.ctx.destination);
+      this.workletNode.connect(this.gainNode);
       this.workletNode.onprocessorerror = () => {
         setStatus('AudioWorklet processor error.');
       };
       this.workletNode.port.onmessage = (event) => {
         if (event.data?.type === 'need-data') {
           this.pumpBuffers();
+        } else if (event.data?.type === 'drained') {
+          if (this.onEnded) this.onEnded();
         }
       };
       this.workletNode.port.postMessage({ type: 'ping' });
@@ -255,6 +268,13 @@ class MoonSoundPlayer {
     const { mwmPath, mwkPath } = await this.stageTrackFiles(track);
     const ok = this.fn.prepareSong(mwmPath, mwkPath || '', loops);
     if (!ok) throw new Error(this.fn.lastError() || 'Failed to prepare song.');
+    this.lastTotalSamples = this.fn.totalSamples();
+
+    if (this.gainNode) {
+      const now = this.ctx.currentTime;
+      this.gainNode.gain.cancelScheduledValues(now);
+      this.gainNode.gain.setValueAtTime(1, now);
+    }
 
     this.isPlaying = true;
     this.workletNode.port.postMessage({ type: 'stop' });
@@ -272,7 +292,6 @@ class MoonSoundPlayer {
         this.isPlaying = false;
         this.stopPumpTimer();
         this.workletNode.port.postMessage({ type: 'end' });
-        if (this.onEnded) this.onEnded();
         return;
       }
 
@@ -300,7 +319,6 @@ class MoonSoundPlayer {
         this.isPlaying = false;
         this.stopPumpTimer();
         this.workletNode.port.postMessage({ type: 'end' });
-        if (this.onEnded) this.onEnded();
         return;
       }
     }
@@ -327,11 +345,26 @@ class MoonSoundPlayer {
     this.fn.stopSong();
   }
 
+  async fadeOut(durationMs = 1000) {
+    if (!this.ctx || !this.gainNode) return;
+    const now = this.ctx.currentTime;
+    const end = now + durationMs / 1000;
+    const current = this.gainNode.gain.value;
+    this.gainNode.gain.cancelScheduledValues(now);
+    this.gainNode.gain.setValueAtTime(current, now);
+    this.gainNode.gain.linearRampToValueAtTime(0, end);
+    await new Promise((resolve) => window.setTimeout(resolve, durationMs));
+  }
+
   shutdown() {
     this.stop();
     if (this.workletNode) {
       this.workletNode.disconnect();
       this.workletNode = null;
+    }
+    if (this.gainNode) {
+      this.gainNode.disconnect();
+      this.gainNode = null;
     }
     if (this.ctx) {
       this.ctx.close();
@@ -357,12 +390,37 @@ class MoonSoundPlayer {
 }
 
 const player = new MoonSoundPlayer();
-player.onEnded = (error) => {
+player.onEnded = async (error) => {
   setPlayingState(false);
+  stopPlaybackTimer();
+  if (Number.isFinite(state.playbackTotalSeconds)) {
+    updatePlaybackTimeDisplay(state.playbackTotalSeconds, state.playbackTotalSeconds);
+  }
   if (error) {
     setStatus(`Playback ended with error: ${error.message}`);
-  } else {
+    return;
+  }
+
+  if (!state.autoAdvanceAfterEnd) {
     setStatus('Playback finished.');
+    return;
+  }
+
+  const next = nextTrack(activeTrack());
+  if (!next) {
+    setStatus('Playback finished.');
+    return;
+  }
+
+  try {
+    setStatus(`Loading ${next.title}...`);
+    player.stop();
+    setSelectedTrack(next);
+    renderTracks();
+    updateNowPlayingMeta();
+    await handlePlay();
+  } catch (advanceError) {
+    setStatus(`Auto-next failed: ${advanceError.message}`);
   }
 };
 
@@ -372,6 +430,37 @@ function setStatus(message) {
 
 function setPlayingState(isPlaying) {
   els.statePill.textContent = isPlaying ? 'Playing' : 'Idle';
+}
+
+function formatClock(seconds) {
+  if (!Number.isFinite(seconds) || seconds < 0) return '--:--';
+  const total = Math.floor(seconds);
+  const mm = Math.floor(total / 60);
+  const ss = total % 60;
+  return `${String(mm).padStart(2, '0')}:${String(ss).padStart(2, '0')}`;
+}
+
+function updatePlaybackTimeDisplay(currentSec, totalSec) {
+  if (!els.playbackTime) return;
+  els.playbackTime.textContent = `${formatClock(currentSec)}/${formatClock(totalSec)}`;
+}
+
+function stopPlaybackTimer() {
+  if (state.playbackTimerId !== null) {
+    window.clearInterval(state.playbackTimerId);
+    state.playbackTimerId = null;
+  }
+}
+
+function startPlaybackTimer(totalSeconds) {
+  stopPlaybackTimer();
+  state.playbackStartedAtMs = performance.now();
+  state.playbackTotalSeconds = totalSeconds;
+  updatePlaybackTimeDisplay(0, totalSeconds);
+  state.playbackTimerId = window.setInterval(() => {
+    const elapsed = (performance.now() - state.playbackStartedAtMs) / 1000;
+    updatePlaybackTimeDisplay(Math.min(elapsed, totalSeconds), totalSeconds);
+  }, 200);
 }
 
 function setControlsEnabled(enabled) {
@@ -433,6 +522,16 @@ function activeTrack() {
 function setSelectedTrack(track) {
   if (!track) return;
   state.selectedTrackKey = trackKey(track);
+}
+
+function nextTrack(current) {
+  const tracks = displayTracksForDisk(activeDisk());
+  if (!tracks.length) return null;
+  if (!current) return tracks[0];
+  const idx = tracks.findIndex((t) => trackKey(t) === trackKey(current));
+  if (idx < 0) return tracks[0];
+  const nextIdx = (idx + 1) % tracks.length;
+  return tracks[nextIdx];
 }
 
 function renderDiskMenu() {
@@ -524,7 +623,8 @@ function buildFileCandidates(filename) {
 }
 
 async function fetchFirstExisting(folder, candidateNames) {
-  const pathPrefixes = ['', './', '../'];
+  const inWebSubdir = window.location.pathname.includes('/web/');
+  const pathPrefixes = inWebSubdir ? ['../', '', './'] : ['', './', '../'];
   const errors = [];
 
   for (const prefix of pathPrefixes) {
@@ -594,14 +694,23 @@ async function handlePlay() {
 
   const loops = Number.parseInt(els.loopCount.value, 10);
   const loopCount = Number.isFinite(loops) ? Math.max(0, Math.min(99, loops)) : 0;
-  // In libmoonsound, low loop counts can end quickly on looped tracks.
-  // Treat 0 as practical infinite playback.
-  const effectiveLoops = loopCount === 0 ? 99 : loopCount;
+  state.autoAdvanceAfterEnd = loopCount > 0;
+  // 0 keeps practical infinite mode, finite values map to intro + (N + 1) loops.
+  const effectiveLoops = loopCount === 0 ? 99 : loopCount + 1;
 
   setStatus(`Loading ${track.title}...`);
 
   try {
     await player.play(track, effectiveLoops);
+    const totalSeconds = player.lastTotalSamples > 0
+      ? player.lastTotalSamples / player.fn.sampleRate()
+      : NaN;
+    if (Number.isFinite(totalSeconds)) {
+      startPlaybackTimer(totalSeconds);
+    } else {
+      stopPlaybackTimer();
+      updatePlaybackTimeDisplay(0, NaN);
+    }
     setPlayingState(true);
     els.nowMeta.textContent = `Now playing ${track.title} by ${track.author}`;
     setStatus(`Playing ${track.title} (${activeDisk().id})${loopCount === 0 ? ' - infinite mode' : ''}`);
@@ -612,8 +721,15 @@ async function handlePlay() {
 }
 
 function handleStop() {
+  state.autoAdvanceAfterEnd = false;
   player.stop();
   setPlayingState(false);
+  stopPlaybackTimer();
+  if (Number.isFinite(state.playbackTotalSeconds)) {
+    updatePlaybackTimeDisplay(0, state.playbackTotalSeconds);
+  } else {
+    updatePlaybackTimeDisplay(0, NaN);
+  }
   setStatus('Stopped.');
 }
 
@@ -630,7 +746,9 @@ async function boot() {
     updateNowPlayingMeta();
 
     setControlsEnabled(false);
+    state.autoAdvanceAfterEnd = false;
     setPlayingState(false);
+    updatePlaybackTimeDisplay(0, NaN);
 
     setStatus('Initializing libmoonsound WASM...');
     await player.initModule();

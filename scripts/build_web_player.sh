@@ -70,7 +70,7 @@ emcc -O3 \
   -sALLOW_MEMORY_GROWTH=1 \
   -sFORCE_FILESYSTEM=1 \
   -sENVIRONMENT=web \
-  -sEXPORTED_FUNCTIONS="['_malloc','_free','_dmv_load_core','_dmv_prepare_song','_dmv_render_pcm','_dmv_stop_song','_dmv_shutdown','_dmv_sample_rate','_dmv_last_error']" \
+  -sEXPORTED_FUNCTIONS="['_malloc','_free','_dmv_load_core','_dmv_prepare_song','_dmv_render_pcm','_dmv_stop_song','_dmv_shutdown','_dmv_sample_rate','_dmv_total_samples','_dmv_last_error']" \
   -sEXPORTED_RUNTIME_METHODS="['ccall','cwrap','FS','HEAP8','HEAP16','HEAPU8']" \
   -o "${OUT_DIR}/moonsound.js"
 
